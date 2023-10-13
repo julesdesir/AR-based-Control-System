@@ -1,39 +1,44 @@
-
 import socket
+import struct
 
-localIP = "127.0.0.1"
+localIP = "0.0.0.0"
 localPort = 25001
 bufferSize = 1024
 
-msgFromServer = "Hello UDP Client"
-bytesToSend = str.encode(msgFromServer)
+# Create a TCP socket
+TCPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
 
-# Create a datagram socket
-UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-
-# Bind to address and ip
-UDPServerSocket.bind((localIP, localPort))
+# Bind to address and port
+TCPServerSocket.bind((localIP, localPort))
 
 
-print("UDP server up and listening")
+def function(a, b):
+    return a + b
 
 
-# Listen for incoming datagrams
-stay = True
-bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
-clientIP = bytesAddressPair[1]
+on = True
 
-while (stay):
+print("TCP server up and listening")
+TCPServerSocket.listen(1)  # Listen for incoming connections
+clientSocket, clientAddress = TCPServerSocket.accept()
 
-    a = int(input("a = "))
-    b = int(input("b = "))
-    c = a+b
-    data = str(a)+","+str(b)+","+str(c)
-    print(data)
+while on:
 
-    # Connect to the server and send the data
-    UDPServerSocket.sendto(data.encode(), clientIP)
+    data = clientSocket.recv(bufferSize)
+    if not data:
+        continue
 
-    exit = input("exit ? y/n ")
+    received_floats = struct.unpack('ff', data)
+    a = received_floats[0]
+    b = received_floats[1]
+    c = function(a, b)
+
+    floats_to_send = c  # Deux nombres flottants à envoyer
+    message = struct.pack('f', *floats_to_send)
+    clientSocket.send(message)
+
+    exit = input("exit? y/n ")
     if exit == "y":
-        stay = False
+        on = False
+
+TCPServerSocket.close()
