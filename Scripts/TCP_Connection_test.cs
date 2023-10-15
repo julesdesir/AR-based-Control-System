@@ -8,10 +8,10 @@ public class MyListener : MonoBehaviour
 {
     Thread thread;
     public int connectionPort = 25001;
-    TcpListener server;
     TcpClient client;
     bool running;
-
+    public string serverIp = "172.16.16.95";
+    public int port = 12345;
 
     void Start()
     {
@@ -23,12 +23,10 @@ public class MyListener : MonoBehaviour
 
     void GetData()
     {
-        // Create the server
-        server = new TcpListener(IPAddress.Any, connectionPort);
-        server.Start();
+
 
         // Create a client to get the data stream
-        client = server.AcceptTcpClient();
+        client = new TcpClient(serverIp, port);
 
         // Start listening
         running = true;
@@ -39,10 +37,7 @@ public class MyListener : MonoBehaviour
             Connection();
         }
     }
-    private void OnApplicationQuit()
-    {
-        server.Stop();
-    }
+    
     void Connection()
     {
         // Read data from the network stream
@@ -52,7 +47,7 @@ public class MyListener : MonoBehaviour
 
         // Decode the bytes into a string
         string dataReceived = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-
+        Debug.Log(dataReceived);
         // Make sure we're not getting an empty string
         //dataReceived.Trim();
         if (dataReceived != null && dataReceived != "")
