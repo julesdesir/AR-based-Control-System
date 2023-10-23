@@ -8,11 +8,11 @@ class BlueBall():
     
     def go_to_objective(self, x_objective, y_objective, delta_time):
 
-        norm = math.sqrt(x_objective**2+y_objective**2)
+        norm = math.sqrt((x_objective-self.x)**2+(y_objective-self.y)**2)
 
-        x_objective_normalized = x_objective/norm
-        y_objective_normalized = y_objective/norm
+        x_speed = (x_objective-self.x)/norm
+        y_speed = (y_objective-self.y)/norm
 
-        self.x += x_objective_normalized*delta_time
-        self.y += y_objective_normalized*delta_time
+        self.x += x_speed*delta_time
+        self.y += y_speed*delta_time
 
