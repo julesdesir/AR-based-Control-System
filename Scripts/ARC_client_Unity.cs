@@ -19,11 +19,16 @@ public class ARC_client_Unity : MonoBehaviour
     public Text pressPumpdisp;
     public Text pressChokedisp;
 
-    private float par1;
-    private float par2;
-    private float par3;
-    private float par4;
-    private float par5;
+    private float inp1;
+    private float inp2;
+    private float inp3;
+    private float inp4;
+    
+    private float out1;
+    private float out2;
+    private float out3;
+    private float out4;
+    private float out5;
 
     void Start()
     {
@@ -34,31 +39,43 @@ public class ARC_client_Unity : MonoBehaviour
     {
         IPEndPoint clientEndPoint = new IPEndPoint(IPAddress.Any, 0);
         byte[] receivedBytes = udpServer.EndReceive(result, ref clientEndPoint);
-
+        
+        
         // Convert the received bytes to a float
-        float bitRPM = BitConverter.ToSingle(receivedBytes, 0);
-        float resFlow = BitConverter.ToSingle(receivedBytes, sizeof(float));
-        float BHCP = BitConverter.ToSingle(receivedBytes, 2 * sizeof(float));
-        float pressPump = BitConverter.ToSingle(receivedBytes, 3 * sizeof(float));
-        float pressChoke = BitConverter.ToSingle(receivedBytes, 4 * sizeof(float));
-
-        List<float> parameter = new List<float> {bitRPM, resFlow, BHCP, pressPump, pressChoke};
-
+        float RPM = BitConverter.ToSingle(receivedBytes, 0);
+        float WOB = BitConverter.ToSingle(receivedBytes, sizeof(float));
+        float Zc = BitConverter.ToSingle(receivedBytes, 2 * sizeof(float)); 
+        float Qp = BitConverter.ToSingle(receivedBytes, 3 * sizeof(float));
+        float bitRPM = BitConverter.ToSingle(receivedBytes, 4 * sizeof(float));
+        float resFlow = BitConverter.ToSingle(receivedBytes, 5 * sizeof(float));
+        float BHCP = BitConverter.ToSingle(receivedBytes, 6 * sizeof(float));
+        float pressPump = BitConverter.ToSingle(receivedBytes, 7 * sizeof(float));
+        float pressChoke = BitConverter.ToSingle(receivedBytes, 8 * sizeof(float));
+        
+        List<float> input = new List<float> {RPM, WOB, Zc, Qp};
+        List<float> output = new List<float> {bitRPM, resFlow, BHCP, pressPump, pressChoke};
+        
         // Display each parameter in the Unity console
-        /*foreach(var p in parameter)
+        foreach(var p in input)
             { Debug.Log("Receive from server: " + p.ToString()); }
-        */
-
-        Debug.Log("resFlow: " + resFlow.ToString());
-
-        //Set parameters to be able to update them in void Update()
-        par1 = bitRPM;
-        par2 = resFlow;
-        par3 = BHCP;
-        par4 = pressPump;
-        par5 = pressChoke;
-
-
+        
+        
+        //Debug.Log("resFlow: " + resFlow.ToString());
+        
+        //Set inputs and outputs to be able to update them in void Update()
+        
+        inp1 = RPM;
+        inp2 = WOB;
+        inp3 = Zc;
+        inp4 = Qp;
+        
+        out1 = bitRPM;
+        out2 = resFlow;
+        out3 = BHCP;
+        out4 = pressPump;
+        out5 = pressChoke;
+        
+        
         // Continue listening for more data
         udpServer.BeginReceive(new AsyncCallback(ReceiveData), null);
     }
