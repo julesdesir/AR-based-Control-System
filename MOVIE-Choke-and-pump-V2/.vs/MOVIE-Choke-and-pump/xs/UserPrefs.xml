@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{7AC829DD-877A-BBB3-3B66-E243E016A10A}|">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="92eea7ed-8a97-44d4-b299-ca6ca54270fe" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/C_moving_target.cs">
+    <Files>
+      <File FileName="Assets/Scripts/C_target_value_real_time.cs" Line="17" Column="29" />
+      <File FileName="Assets/Scripts/C_controlling_value.cs" Line="22" Column="9" />
+      <File FileName="Assets/Scripts/C_moving_target.cs" Line="25" Column="9" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MOVIE-Choke-and-pump" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+</Properties>
